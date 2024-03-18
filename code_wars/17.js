@@ -27,11 +27,22 @@
 
 // NOTE: There will also be lists tested of lengths upwards of 10,000,000 elements. Be sure your code doesn't time out.
 
-function sumPairs(ints, s) {
-  return [0, 0] || undefined ;
+function sumPairs(ints, sum) {
+  let pairs = []
+
+  for (let firstIndex = 0; firstIndex < ints.length - 1; firstIndex++) {
+    for (let secondIndex = firstIndex + 1; secondIndex < ints.length; secondIndex++) {
+      let firstNumber = ints[firstIndex];
+      let secondNumber = ints[secondIndex];
+      if (firstNumber + secondNumber === sum) {
+        pairs.push([firstNumber, secondNumber, {secondIndex: secondIndex}])
+      }
+    }
+  }
+
+  if (pairs.length === 0) return undefined;
+  return pairs.sort((a,b) => a[2].secondIndex - b[2].secondIndex)[0].slice(0, 2);
 }
-
-
 
 
 console.log(sumPairs([1, 4, 8, 7, 3, 15], 8), [1, 7], "Basic: [1, 4, 8, 7, 3, 15] should return [1, 7] for sum = 8");
