@@ -21,6 +21,23 @@ Algo:
   - return chars
 */
 
+function commonChars(array) {
+  let results = [];
+  let comparisonStr = array[0];
+  let comparisonArr = array.slice(1);
+
+  for (let char of comparisonStr) {
+    if (comparisonArr.every(elem => elem.includes(char))) {
+      results.push(char);
+      comparisonArr.forEach((elem, idx) => {
+        comparisonArr[idx]  = elem.replace(char, '#');
+      });
+    }
+  }
+
+  console.log(results);
+}
+
 // function commonChars(arr) {
 //   let chars = [];
 //   let firstElement = arr[0];
@@ -38,38 +55,6 @@ Algo:
 //   return chars;
 // }
 
-function commonChars(arr) {
-  let initialCount = {};
-
-  // create a frequency map for the first string
-  arr[0].split('').forEach(char => {
-    initialCount[char] = (initialCount[char] || 0) + 1;
-  });
-
-  let result = [];
-
-  // iterate over each character in the frequency map
-  Object.keys(initialCount).forEach(char => {
-    let minFrequency = initialCount[char]; 
-
-    // check if the character is common to all strings with 'every'
-    let isCommon = arr.slice(1).every(str => {
-      let charFrequencyInStr = str.split('').filter(el => el === char).length;
-
-      // update min frequency based on this string
-      minFrequency = Math.min(minFrequency, charFrequencyInStr);
-      return charFrequencyInStr > 0; // ensure the character exists in this string
-    });
-
- if (isCommon && minFrequency > 0) {
-            for (let i = 0; i < minFrequency; i++) {
-                result.push(char);
-            }
-        }
-    });
-
-    return result;
-}
 
 console.log(commonChars(['a', 'b'])) // []
 console.log(commonChars(['ab', 'bc'])) // ['b']
